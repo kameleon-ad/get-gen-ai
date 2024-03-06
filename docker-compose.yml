@@ -16,6 +16,7 @@ services:
   auth-server:
     build:
       context: ./auth
+    command: "bash /app/runserver.sh"
     volumes:
       - ./auth:/app/
     environment:
