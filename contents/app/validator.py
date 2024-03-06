@@ -5,8 +5,8 @@ class ContentValidation(Schema):
     """
     Validate body of login api
     :param
-        email: string, required
-        password: string, required
+        title: string, required
+        content: string, required
     Ex:
     {
         "title": "Title",
@@ -15,3 +15,16 @@ class ContentValidation(Schema):
     """
     title = fields.String(required=True, validate=[validate.Length(min=1, max=50)])
     content = fields.String(required=True, validate=[validate.Length(min=1)])
+
+
+class ReviewValidation(Schema):
+    """
+    Validate body of login api
+    :param
+        review: string, required
+    Ex:
+    {
+        "review": "review"
+    }
+    """
+    review = fields.String(required=True, validate=[validate.Length(min=1)])

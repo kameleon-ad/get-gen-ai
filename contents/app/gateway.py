@@ -1,3 +1,5 @@
+from functools import wraps
+
 import requests
 from flask import request, current_app
 
@@ -14,6 +16,7 @@ def authorization_require():
 
     """
     def wrapper(func):
+        @wraps(func)
         def decorator(*args, **kwargs):
             auth_endpoint = current_app.config['AUTH_ENDPOINT']
             authorization = request.headers.get('Authorization', '').strip()
