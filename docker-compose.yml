@@ -1,0 +1,40 @@
+version: "3"
+
+
+services:
+  auth-db:
+    image: postgres:15
+    volumes:
+      - ./db/auth:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=auth-db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+        - 5432:5432
+
+  auth-server:
+    build:
+      context: ./auth
+    volumes:
+      - ./auth:/app/
+    environment:
+      - POSTGRES_HOST=auth-db
+      - POSTGRES_PORT=5432
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DATABASE=auth-db
+      - SECRET_KEY=SECRET_KEY
+    ports:
+      - 8000:8000
+    links:
+      - auth-db
+
+  nginx:
+    image: nginx:alpine
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - 80:80
+    links:
+      - auth-server
