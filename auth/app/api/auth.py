@@ -21,7 +21,7 @@ from app.api.helper import send_error, send_result
 from app.utils import logged_input, get_timestamp_now
 from app.validator import SignupBodyValidation, LoginBodyValidation, UserSchema
 from app.models import User, Token
-from app.extensions import SQL_DB, JWT
+from app.extensions import SQL_DB
 
 ACCESS_EXPIRES = timedelta(days=1)
 REFRESH_EXPIRES = timedelta(days=5)
