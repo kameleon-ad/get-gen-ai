@@ -10,8 +10,6 @@ services:
       - POSTGRES_DB=auth-db
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-    ports:
-        - 5432:5432
 
   auth-server:
     build:
@@ -26,10 +24,35 @@ services:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DATABASE=auth-db
       - SECRET_KEY=SECRET_KEY
-    ports:
-      - 8000:8000
     links:
       - auth-db
+
+  contents-db:
+    image: postgres:15
+    volumes:
+      - ./db/contents:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=contents-db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+        - 5432:5432
+
+  contents-server:
+    build:
+      context: ./contents
+    command: "bash /app/runserver.sh"
+    volumes:
+      - ./contents:/app/
+    environment:
+      - POSTGRES_HOST=contents-db
+      - POSTGRES_PORT=5432
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DATABASE=contents-db
+      - SECRET_KEY=SECRET_KEY
+    links:
+      - contents-db
 
   nginx:
     image: nginx:alpine
@@ -39,3 +62,4 @@ services:
       - 80:80
     links:
       - auth-server
+      - contents-server
