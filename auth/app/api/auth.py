@@ -161,5 +161,5 @@ def validate_token():
     Returns:
             validate or not
     """
-    verify_jwt_in_request()
-    return send_result(message='Token valid')
+    _, payload = verify_jwt_in_request()
+    return send_result(message=f'Token valid', data=payload)
