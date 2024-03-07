@@ -1,0 +1,35 @@
+name: CI/CD
+
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-push-auth:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Build and push auth image
+        run: |
+          docker build -t alvindelos439/gen-get-ai-auth ./auth
+          docker tag alvindelos439/gen-get-ai-auth alvindelos439/gen-get-ai-auth:latest
+          docker push alvindelos439/gen-get-ai-auth:latest
+
+  build-and-push-contents:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Build and push contents image
+        run: |
+          docker build -t alvindelos439/gen-get-ai-contents ./contents
+          docker tag alvindelos439/gen-get-ai-contents alvindelos439/gen-get-ai-contents:latest
+          docker push alvindelos439/gen-get-ai-contents:latest

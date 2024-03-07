@@ -9,6 +9,6 @@ RUN apt-get update && \
 
 WORKDIR /app
 
-ADD requirements.txt .
+COPY . /app
 
 RUN pip install -r requirements.txt
