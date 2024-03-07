@@ -23,8 +23,17 @@ jobs:
     - name: Build and run Docker Compose
       run: |
         docker compose up --build -d
+
+    - name: Run Test on auth-server
+      run: |
         docker compose exec -T auth-server python -m unittest
+
+    - name: Run Test on contents-server
+      run: |
         docker compose exec -T contents-server python -m unittest
+
+    - name: Docker Compose down
+      run: |
         docker compose down
 
     - name: Push to DockerHub
