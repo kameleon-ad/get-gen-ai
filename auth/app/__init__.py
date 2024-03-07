@@ -6,12 +6,11 @@ from app.extensions import (
     JWT,
     SQL_DB,
 )
-from config import Base
 
 
 def create_app(config = None):
     if config is None:
-        config = Base
+        config = 'config.DevConfig'
 
     app = Flask(__name__)
     app.config.from_object(config)

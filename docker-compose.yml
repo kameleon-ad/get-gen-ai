@@ -40,8 +40,6 @@ services:
       - POSTGRES_DB=contents-db
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-    ports:
-        - 5432:5432
 
   contents-server:
     container_name: contents-server

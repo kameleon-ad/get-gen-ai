@@ -30,6 +30,7 @@ def status():
 
 
 @api_contents_bp.get('/')
+@api_contents_bp.get('')
 def retrieve_all_contents():
     created_by = request.args.get('created_by')
     reviewed_by = request.args.get('reviewed_by')
@@ -50,6 +51,7 @@ def retrieve_content_by_id(content_id):
 
 
 @api_contents_bp.post('/')
+@api_contents_bp.post('')
 @authorization_require()
 def create_content(payload: dict):
     try:
@@ -123,7 +125,8 @@ def review_content(content_id: int, payload: dict):
 
 
 @api_contents_bp.delete('/<int:content_id>')
-def delete_content(content_id: int):
+@authorization_require()
+def delete_content(content_id: int, **kwargs):
     content = Content.query.get(content_id)
     if content is None:
         return send_result()

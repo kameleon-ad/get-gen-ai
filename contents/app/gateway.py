@@ -24,11 +24,11 @@ def authorization_require():
                 res = requests.get(auth_endpoint, headers={"Authorization": authorization}).json()
             except Exception as ex:
                 logged_error(f"Call validate token api failed: {ex}")
-                return send_error(message="You don't have permission")
+                return send_error(message="You don't have permission", code=401)
             if 'message' in res and res['message']['status'] == 'success':
                 payload = res['data']
                 return func(*args, payload=payload, **kwargs)
             else:
-                return send_error(message="You don't have permission")
+                return send_error(message="You don't have permission", code=401)
         return decorator
     return wrapper
