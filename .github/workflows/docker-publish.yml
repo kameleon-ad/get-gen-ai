@@ -22,11 +22,27 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build and push auth image
+      - name: Build auth image
         run: |
           docker build -t alvindelos439/gen-get-ai-auth ./auth
           docker tag alvindelos439/gen-get-ai-auth alvindelos439/gen-get-ai-auth:latest
+
+      - name: Start auth container
+        run: |
+          docker run -d --name auth-container alvindelos439/gen-get-ai-auth
+
+      - name: Run unit tests for auth
+        run: |
+          docker exec auth-container python -m unittest discover tests
+
+      - name: Push auth image
+        run: |
           docker push alvindelos439/gen-get-ai-auth:latest
+
+      - name: Stop and remove auth container
+        run: |
+          docker stop auth-container
+          docker rm auth-container
 
   build-and-push-contents:
     runs-on: ubuntu-latest
@@ -40,8 +56,24 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build and push contents image
+      - name: Build contents image
         run: |
           docker build -t alvindelos439/gen-get-ai-contents ./contents
           docker tag alvindelos439/gen-get-ai-contents alvindelos439/gen-get-ai-contents:latest
+
+      - name: Start contents container
+        run: |
+          docker run -d --name contents-container alvindelos439/gen-get-ai-contents
+
+      - name: Run unit tests for contents
+        run: |
+          docker exec contents-container python -m unittest discover tests
+
+      - name: Push contents image
+        run: |
           docker push alvindelos439/gen-get-ai-contents:latest
+
+      - name: Stop and remove contents container
+        run: |
+          docker stop contents-container
+          docker rm contents-container
