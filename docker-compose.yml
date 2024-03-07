@@ -14,6 +14,7 @@ services:
 
   auth-server:
     container_name: auth-server
+    image: alvindelos439/get-gen-ai-auth:latest
     build:
       context: ./auth
     command: "bash /app/runserver.sh"
@@ -43,6 +44,7 @@ services:
 
   contents-server:
     container_name: contents-server
+    image: alvindelos439/get-gen-ai-contents:latest
     build:
       context: ./contents
     command: "bash /app/runserver.sh"
