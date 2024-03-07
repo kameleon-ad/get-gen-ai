@@ -24,12 +24,12 @@ jobs:
 
       - name: Build auth image
         run: |
-          docker build -t alvindelos439/gen-get-ai-auth ./auth
-          docker tag alvindelos439/gen-get-ai-auth alvindelos439/gen-get-ai-auth:latest
+          docker build -t alvindelos439/get-gen-ai-auth ./auth
+          docker tag alvindelos439/get-gen-ai-auth alvindelos439/get-gen-ai-auth:latest
 
       - name: Start auth container
         run: |
-          docker run -d --name auth-container alvindelos439/gen-get-ai-auth
+          docker run -d --name auth-container alvindelos439/get-gen-ai-auth
 
       - name: Run unit tests for auth
         run: |
@@ -37,7 +37,7 @@ jobs:
 
       - name: Push auth image
         run: |
-          docker push alvindelos439/gen-get-ai-auth:latest
+          docker push alvindelos439/get-gen-ai-auth:latest
 
       - name: Stop and remove auth container
         run: |
@@ -58,12 +58,12 @@ jobs:
 
       - name: Build contents image
         run: |
-          docker build -t alvindelos439/gen-get-ai-contents ./contents
-          docker tag alvindelos439/gen-get-ai-contents alvindelos439/gen-get-ai-contents:latest
+          docker build -t alvindelos439/get-gen-ai-contents ./contents
+          docker tag alvindelos439/get-gen-ai-contents alvindelos439/get-gen-ai-contents:latest
 
       - name: Start contents container
         run: |
-          docker run -d --name contents-container alvindelos439/gen-get-ai-contents
+          docker run -d --name contents-container alvindelos439/get-gen-ai-contents
 
       - name: Run unit tests for contents
         run: |
@@ -71,7 +71,7 @@ jobs:
 
       - name: Push contents image
         run: |
-          docker push alvindelos439/gen-get-ai-contents:latest
+          docker push alvindelos439/get-gen-ai-contents:latest
 
       - name: Stop and remove contents container
         run: |
